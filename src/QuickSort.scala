@@ -75,5 +75,8 @@ object QuickSort {
     result = 0
     calculateComparisons(chooseMedianPivot, numbers3, 0, n - 1)
     println("Comparisons with median element pivot " + result)
+    for (i <- 0 to n - 1) {
+	print(numbers1(i) + " ")
+    }
   }
 }
