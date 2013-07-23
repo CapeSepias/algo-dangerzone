@@ -14,11 +14,16 @@ object QuickSort {
   }
 
   def chooseMedianPivot(numbers: Array[Int], start: Int, end: Int): Int = {
-    val len = end - start + 1
-    var index = start + len / 2
-    if (len % 2 == 0)
-      index = index - 1
-    numbers.indexWhere(_ == List(numbers(start), numbers(end), numbers(index)).sorted.apply(1))
+    def length: Int = {
+      end - start + 1
+    }
+    def getMiddleIndex(length: Int): Int = {
+      length match {
+        case l if l % 2 == 0 => start + length / 2 - 1
+        case _ => start + length / 2
+      }
+    }
+    numbers.indexWhere(_ == List(numbers(start), numbers(end), numbers(getMiddleIndex(length))).sorted.apply(1))
   }
 
   def partitionNumbers(numbers: Array[Int], position: Int, start: Int, end: Int): (Int, Int, Int) = {
@@ -41,16 +46,15 @@ object QuickSort {
     (start, i - 1, end)
   }
 
-  def calculateComparisons(f: (Array[Int], Int, Int) => Int, numbers: Array[Int], start: Int, end: Int): Unit = {
+  def calculateComparisons(pivot: (Array[Int], Int, Int) => Int, numbers: Array[Int], start: Int, end: Int): Unit = {
     val n = end - start
     n match {
       case 0 => return
       case _ => {
         if (start < numbers.length && end < numbers.length && start <= end) {
-          val p = f(numbers, start, end)
-          val positions = partitionNumbers(numbers, p, start, end)
-          calculateComparisons(f, numbers, positions._1, positions._2 - 1)
-          calculateComparisons(f, numbers, positions._2 + 1, positions._3)
+          val positions = partitionNumbers(numbers, pivot(numbers, start, end), start, end)
+          calculateComparisons(pivot, numbers, positions._1, positions._2 - 1)
+          calculateComparisons(pivot, numbers, positions._2 + 1, positions._3)
         }
       }
     }
@@ -76,7 +80,8 @@ object QuickSort {
     calculateComparisons(chooseMedianPivot, numbers3, 0, n - 1)
     println("Comparisons with median element pivot " + result)
     for (i <- 0 to n - 1) {
-	print(numbers1(i) + " ")
+      print(numbers1(i) + " ")
     }
+    println
   }
 }

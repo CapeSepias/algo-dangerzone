@@ -1,4 +1,6 @@
-
+/**
+ * @author kperikov
+ */
 object MinCut {
 
 
