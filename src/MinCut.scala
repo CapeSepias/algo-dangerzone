@@ -1,3 +1,4 @@
+
 import java.io.{InputStreamReader, BufferedReader}
 import java.util.StringTokenizer
 import scala.math._
@@ -7,6 +8,7 @@ import scala.math._
  * @author kperikov
  */
 object MinCut {
+
 
   var br: BufferedReader = null
   var st: StringTokenizer = null
