@@ -1,4 +1,5 @@
 /**
+ * Solution for PA#2
  * @author kperikov
  */
 object QuickSort {
