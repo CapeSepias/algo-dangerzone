@@ -9,6 +9,6 @@ readAInt = readLn
 main = do
     inputA <- getLine
     inputB <- getLine
-    putStrLn $ solve $ read input
+    putStrLn $ solve $ read inputA
 
 solve n = if (n > 2 && mod n 2 == 0) then "YES" else "NO"
