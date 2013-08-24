@@ -24,7 +24,7 @@ public class PercolationStats {
             while (!p.percolates()) {
                 int row = StdRandom.uniform(N) + 1;
                 int column = StdRandom.uniform(N) + 1;
-                if (p.isBlocked(row, column)) {
+                if (!p.isOpen(row, column)) {
                     p.open(row, column);
                     count++;
                 }

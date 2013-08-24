@@ -61,7 +61,7 @@ public class Percolation {
         return weightedQuickUnionUF.connected(0, N * N + 1);
     }           // does the system percolate?
 
-    public boolean isBlocked(int i, int j) {
+    private boolean isBlocked(int i, int j) {
         if (i <= 0 || i > N) throw new IndexOutOfBoundsException("row index i out of bounds");
         if (j <= 0 || j > N) throw new IndexOutOfBoundsException("column index j out of bounds");
         return !grid[i - 1][j - 1];
