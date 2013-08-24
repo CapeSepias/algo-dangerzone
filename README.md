@@ -9,3 +9,4 @@ List of solutions:
 * Strongly connected component problem
 * Shortest path's from one vertex to all other (Floyd-Warshall algo)
 * Karatsuba fast multiplication (right now just skeleton in Haskell)
+* Percolation problem
