@@ -37,7 +37,7 @@ public class PercolationStats {
         for (int i = 0; i < T; ++i) {
             sum += (percent[i] - mean) * (percent[i] - mean);
         }
-        stddev = sum / (double) (T - 1);
+        stddev = sum / (T - 1.0d);
         confLo = mean - (1.96d * stddev / Math.sqrt(T));
         confHi = mean + (1.96d * stddev / Math.sqrt(T));
     }   // perform T independent computational experiments on an N-by-N grid
