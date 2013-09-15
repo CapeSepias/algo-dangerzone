@@ -1,5 +1,4 @@
-algo-dangerzone
-===============
+## Various algorithms and algorithms tasks from courses, etc. ##
 
 Contains various stuff regarding to algorithms and data structures, also some tasks from courses, etc.
 
