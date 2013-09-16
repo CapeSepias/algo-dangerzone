@@ -4,13 +4,13 @@ Contains various stuff regarding to algorithms and data structures, also some ta
 
 List of solutions:
 
-* MinCut problem, solved by randomized [Karger's algorithm] [1]
-* [Strongly connected component problem] [2]
-* Shortest path's from one vertex to all other ([Floyd-Warshall algo] [3])
-* Karatsuba fast multiplication (right now just skeleton in Haskell)
-* [Percolation] [4] problem
-    -- Need to add [algs4.jar] [5] and [stdlib.jar] [6] into classpath
-* [Blocking] [7] and [NonBlocking] [8] queue (in progress)
+1. MinCut problem, solved by randomized [Karger's algorithm] [1]
+2. [Strongly connected component problem] [2]
+3. Shortest path's from one vertex to all other ([Floyd-Warshall algo] [3])
+4. Karatsuba fast multiplication (right now just skeleton in Haskell)
+5. [Percolation] [4] problem
+  * Need to add [algs4.jar] [5] and [stdlib.jar] [6] into classpath
+6. [Blocking] [7] and [NonBlocking] [8] queue (in progress)
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorith"
 [2]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/StronglyConnectedComponents.java       "Strongly connected component problem"
