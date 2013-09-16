@@ -8,7 +8,7 @@ import scala.Predef._
  *
  *         Library of different Dijsktra implementation
  */
-object Dijkstra {
+object FloydWarshall {
 
   var br: BufferedReader = null
   var st: StringTokenizer = null
