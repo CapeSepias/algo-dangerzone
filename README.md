@@ -9,3 +9,4 @@ List of solutions:
 * Shortest path's from one vertex to all other (Floyd-Warshall algo)
 * Karatsuba fast multiplication (right now just skeleton in Haskell)
 * Percolation problem
+* Blocking and NonBlocking queue (in progress)
