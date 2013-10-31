@@ -1,3 +1,5 @@
+package org.mystic.concurrency;
+
 /**
  * @author kperikov
  *         <p/>
