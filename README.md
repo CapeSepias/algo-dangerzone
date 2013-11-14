@@ -12,7 +12,7 @@ List of solutions:
   * Need to add [algs4.jar] [5] and [stdlib.jar] [6] into classpath
 6. [Blocking] [7] and [NonBlocking] [8] queue (in progress)
 
-[1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorith"
+[1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorithm"
 [2]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/StronglyConnectedComponents.java       "Strongly connected component problem"
 [3]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/FloydWarshall.scala       "Floyd-Warshall algo"
 [4]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/Percolation.java "Percolation"
