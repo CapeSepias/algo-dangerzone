@@ -1,4 +1,3 @@
-import scala.math._
 
 /**
  * @author kperikov

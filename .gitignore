@@ -70,3 +70,8 @@ out/
 
 # Scala-IDE specific
 .scala_dependencies
+
+.gradle
+gradle/*
+gradlew
+gradlew.bat

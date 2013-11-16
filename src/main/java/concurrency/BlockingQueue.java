@@ -1,4 +1,4 @@
-package org.mystic.concurrency;
+package concurrency;
 
 /**
  * @author kperikov

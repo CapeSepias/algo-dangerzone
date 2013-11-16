@@ -1,8 +1,6 @@
 
 import java.io.{InputStreamReader, BufferedReader}
 import java.util.StringTokenizer
-import scala.math._
-import scala.util.Random
 
 /**
  * Solution for PA#3

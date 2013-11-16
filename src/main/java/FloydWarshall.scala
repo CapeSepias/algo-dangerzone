@@ -1,7 +1,5 @@
 import java.io.{InputStreamReader, BufferedReader}
 import java.util.StringTokenizer
-import scala.math._
-import scala.Predef._
 
 /**
  * @author kperikov
