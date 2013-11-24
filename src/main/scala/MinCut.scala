@@ -1,6 +1,7 @@
+import scala.math._
 
 import java.io.{InputStreamReader, BufferedReader}
-import java.util.StringTokenizer
+import java.util.{Random, StringTokenizer}
 
 /**
  * Solution for PA#3
@@ -9,10 +10,14 @@ import java.util.StringTokenizer
 object MinCut {
 
 
-  var br: BufferedReader = null
-  var st: StringTokenizer = null
   val random = new Random(System.currentTimeMillis())
   val NUMBER_OF_RUNS = 1000
+  var br: BufferedReader = null
+  var st: StringTokenizer = null
+
+  def nextInt: Int = {
+    Integer.parseInt(next)
+  }
 
   def next: String = {
     while (st == null || !st.hasMoreTokens) {
@@ -20,11 +25,6 @@ object MinCut {
     }
     st.nextToken
   }
-
-  def nextInt: Int = {
-    Integer.parseInt(next)
-  }
-
 
   def buildArrayWithAcc(acc: Array[Int], list: List[Int]): Array[Int] = {
     list match {
@@ -72,10 +72,10 @@ object MinCut {
         }
       }
     }
-//    for (i <- 0 until len) {
-//      print(ans(i) + " ")
-//    }
-//    println
+    //    for (i <- 0 until len) {
+    //      print(ans(i) + " ")
+    //    }
+    //    println
     ans
   }
 

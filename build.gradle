@@ -1,6 +1,6 @@
 apply plugin: 'java'
+apply plugin: 'scala'
 
-sourceCompatibility = 1.7
 version = '1.0'
 
 repositories {
@@ -9,7 +9,11 @@ repositories {
 
 dependencies {
     compile files('libs/algs4.jar', 'libs/stdlib.jar')
+    compile 'org.scala-lang:scala-library:2.10.2'
 }
 
-
-apply plugin: 'scala'
+task run(type: JavaExec, dependsOn: classes) {
+    main = 'org.mystic.CleanUpData'
+    classpath sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
+}

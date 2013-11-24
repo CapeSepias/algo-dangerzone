@@ -1,5 +1,6 @@
 import java.io.{InputStreamReader, BufferedReader}
 import java.util.StringTokenizer
+import scala.math._
 
 /**
  * @author kperikov
@@ -11,6 +12,9 @@ object FloydWarshall {
   var br: BufferedReader = null
   var st: StringTokenizer = null
 
+  def nextInt: Int = {
+    Integer.parseInt(next)
+  }
 
   def next: String = {
     while (st == null || !st.hasMoreTokens) {
@@ -19,17 +23,9 @@ object FloydWarshall {
     st.nextToken
   }
 
-  def nextInt: Int = {
-    Integer.parseInt(next)
-  }
-
   def nextLong: Int = {
     Integer.parseInt(next)
   }
-
-  def readString = Console.readLine
-
-  def readInts = readString.trim.split(" ").map(_.toInt)
 
   def solveDijkstraSlow(): Unit = {
 
@@ -47,29 +43,6 @@ object FloydWarshall {
    */
   def solveDijkstraSelfWrittenHeap(): Unit = {
 
-  }
-
-  def solveFloydWarshall(graph: Array[Array[Long]]): Array[Array[Long]] = {
-    val n = graph.length
-    val result = new Array[Array[Long]](n)
-    for (i <- 0 until n) {
-      result(i) = new Array[Long](n)
-    }
-    for (i <- 0 until n) {
-      for (j <- 0 until n) {
-        result(i)(j) = graph(i)(j)
-      }
-    }
-    for (k <- 0 until n) {
-      for (i <- 0 until n) {
-        for (j <- 0 until n) {
-          if (result(i)(k) < Long.MaxValue && result(k)(j) < Long.MaxValue) {
-            result(i)(j) = min(result(i)(j), result(i)(k) + result(k)(j))
-          }
-        }
-      }
-    }
-    result
   }
 
   def main(args: Array[String]) = {
@@ -102,4 +75,31 @@ object FloydWarshall {
     print(sol(0)(187) + ",")
     print(sol(0)(196) + ",")
   }
+
+  def solveFloydWarshall(graph: Array[Array[Long]]): Array[Array[Long]] = {
+    val n = graph.length
+    val result = new Array[Array[Long]](n)
+    for (i <- 0 until n) {
+      result(i) = new Array[Long](n)
+    }
+    for (i <- 0 until n) {
+      for (j <- 0 until n) {
+        result(i)(j) = graph(i)(j)
+      }
+    }
+    for (k <- 0 until n) {
+      for (i <- 0 until n) {
+        for (j <- 0 until n) {
+          if (result(i)(k) < Long.MaxValue && result(k)(j) < Long.MaxValue) {
+            result(i)(j) = min(result(i)(j), result(i)(k) + result(k)(j))
+          }
+        }
+      }
+    }
+    result
+  }
+
+  def readInts = readString.trim.split(" ").map(_.toInt)
+
+  def readString = Console.readLine
 }
