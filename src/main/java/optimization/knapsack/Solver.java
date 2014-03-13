@@ -1,9 +1,7 @@
 package optimization.knapsack;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -23,10 +21,6 @@ public class Solver {
             e.printStackTrace();
         }
     }
-
-    int[] values;
-    int[] weights;
-    int[][] solution;
 
     /**
      * Read the instance, solve it, and print the solution in the standard output
@@ -61,13 +55,10 @@ public class Solver {
         final int items = parseInt(firstLine[0]);
         final int capacity = parseInt(firstLine[1]);
 
+        int[] values;
+        int[] weights;
         values = new int[items];
         weights = new int[items];
-        solution = new int[capacity + 1][items + 1];
-        for (int i = 0; i < capacity + 1; ++i) {
-            Arrays.fill(solution[i], -1);
-        }
-
         for (int i = 1; i < items + 1; i++) {
             String line = lines.get(i);
             String[] parts = line.split("\\s+");
@@ -75,43 +66,83 @@ public class Solver {
             values[i - 1] = parseInt(parts[0]);
             weights[i - 1] = parseInt(parts[1]);
         }
-
-        for (int itemNumber = 0; itemNumber < items + 1; ++itemNumber) {
-            for (int j = 0; j < capacity + 1; ++j) {
-                solution[j][itemNumber] = optimalSolution(j, itemNumber);
-//                System.out.print(solution[j][itemNumber] + " ");
-            }
-//            System.out.println();
+        final double bestExpectation = getBestExpectation(values, weights, capacity);
+        int bestSolution = Integer.MIN_VALUE;
+        BitSet taken = new BitSet();
+        Node root = new Node(0, capacity, bestExpectation);
+        Deque<Node> deque = new LinkedList<>();
+        deque.addFirst(root);
+        while (!deque.isEmpty()) {
+            final Node node = deque.getFirst();
+            
         }
-        // prepare the solution in the specified output format
-        System.out.println(solution[capacity][items] + " 0");
-        final int[] taken = new int[items];
-        int temp = capacity;
-        for (int i = items; i >= 1; --i) {
-            if (solution[temp][i] != solution[temp][i - 1]) {
-                temp -= weights[i - 1];
-                taken[i - 1] = 1;
-            }
-        }
-        for (int i = 0; i < items; i++) {
-            System.out.print(taken[i] + " ");
-        }
-        System.out.println("");
+        System.out.println(bestExpectation);
     }
 
-    private int optimalSolution(int k, int j) {
-        if (solution[k][j] != -1) {
-            return solution[k][j];
+    private double getBestExpectation(int[] values, int[] weights, int capacity) {
+        final int n = values.length;
+        Value[] valuePerKilo = new Value[n];
+        for (int i = 0; i < n; ++i) {
+            valuePerKilo[i] = new Value((double) values[i] / (double) weights[i], weights[i]);
         }
-        if (j == 0) {
-            return 0;
-        } else if (weights[j - 1] <= k) {
-            solution[k][j] = Math.max(optimalSolution(k, j - 1), values[j - 1] + optimalSolution(k - weights[j - 1], j - 1));
-            return solution[k][j];
-        } else {
-            solution[k][j] = optimalSolution(k, j - 1);
-            return solution[k][j];
+        Arrays.sort(valuePerKilo);
+        double result = 0.0d;
+        int left = capacity;
+        for (int i = 0; i < n && left > 0; ++i) {
+            final int min = Math.min(valuePerKilo[i].weight, left);
+            result += min * valuePerKilo[i].valuePerKilo;
+            left -= min;
+        }
+        return result;
+    }
+
+    class Value implements Comparable<Value> {
+
+        Value(double valuePerKilo, int weight) {
+            this.valuePerKilo = valuePerKilo;
+            this.weight = weight;
         }
 
+        double valuePerKilo;
+        int weight;
+
+        @Override
+        public int compareTo(Value o) {
+            return Double.compare(o.valuePerKilo, this.valuePerKilo);
+        }
+
+        @Override
+        public String toString() {
+            return "Value{" +
+                    "valuePerKilo=" + valuePerKilo +
+                    ", weight=" + weight +
+                    '}';
+        }
+    }
+
+    class Node {
+
+        Node(int capacityLeft, int currentValue, double bestExpectation) {
+            this.level = 0;
+            this.capacityLeft = capacityLeft;
+            this.currentValue = currentValue;
+            this.bestExpectation = bestExpectation;
+            this.taken = new BitSet();
+        }
+
+        int capacityLeft;
+        int currentValue;
+        double bestExpectation;
+        int level;
+        BitSet taken;
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "capacityLeft=" + capacityLeft +
+                    ", currentValue=" + currentValue +
+                    ", bestExpectation=" + bestExpectation +
+                    '}';
+        }
     }
 }
