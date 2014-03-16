@@ -10,7 +10,7 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 /**
- * The class <code>Solver</code> is an implementation of a greedy algorithm to solve the knapsack problem.
+ * The class <code>Solver</code> is an implementation of a DP algorithm to solve the knapsack problem.
  */
 public class SolverDP {
 

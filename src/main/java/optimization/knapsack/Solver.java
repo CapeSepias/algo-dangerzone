@@ -1,12 +1,14 @@
 package optimization.knapsack;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
 /**
- * The class <code>Solver</code> is an implementation of a greedy algorithm to solve the knapsack problem.
+ * The class <code>Solver</code> is an implementation of a branch&bound algorithm to solve the knapsack problem.
  */
 public class Solver {
 
@@ -74,7 +76,7 @@ public class Solver {
         deque.addFirst(root);
         while (!deque.isEmpty()) {
             final Node node = deque.getFirst();
-            
+
         }
         System.out.println(bestExpectation);
     }
