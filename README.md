@@ -12,6 +12,7 @@ List of solutions:
 6. [Blocking] [7] and [NonBlocking] [8] queue (on hold)
 7. [Discrete optimization course] [7]
 8. [Machine learning course] [8]
+9. Java 8 tryouts from [Java SE 8 for the Really Impatient]
 
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorithm"
@@ -22,3 +23,4 @@ List of solutions:
 [6]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/NonBlockingQueue.java "NonBlocking"
 [7]: https://class.coursera.org/optimization-002/ "Discrete optimization course"
 [8]: https://class.coursera.org/ml-005 "Machine learning course"
+[9]: http://www.amazon.com/Java-SE-8-Really-Impatient/dp/0321927761 "Java SE 8 for the Really Impatient"
