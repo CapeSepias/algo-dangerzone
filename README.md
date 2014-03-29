@@ -12,7 +12,7 @@ List of solutions:
 6. [Blocking] [7] and [NonBlocking] [8] queue (on hold)
 7. [Discrete optimization course] [7]
 8. [Machine learning course] [8]
-9. Java 8 tryouts from [Java SE 8 for the Really Impatient]
+9. Java 8 tryouts from [Java SE 8 for the Really Impatient] [9]
 
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorithm"
