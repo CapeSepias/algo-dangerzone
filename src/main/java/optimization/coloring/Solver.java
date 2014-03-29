@@ -37,17 +37,27 @@ public class Solver {
         if (fileName == null)
             return;
 
-        // read the lines out of the file
-        List<String> lines = new ArrayList<>();
 
         BufferedReader input = new BufferedReader(new FileReader(fileName));
-        try {
-            String line;
-            while ((line = input.readLine()) != null) {
-                lines.add(line);
-            }
-        } finally {
-            input.close();
+        final String[] in = input.readLine().split(" ");
+        final int N = Integer.parseInt(in[0]);
+        final int E = Integer.parseInt(in[1]);
+
+        final List<List<Integer>> graph = new ArrayList<>(N);
+        for (int i = 0; i < N; ++i) {
+            graph.add(new ArrayList<Integer>());
         }
+
+        for (int i = 0; i < E; ++i) {
+            final String[] vertexes = input.readLine().split(" ");
+            final int s = Integer.parseInt(vertexes[0]);
+            final int f = Integer.parseInt(vertexes[1]);
+            graph.get(s).add(f);
+            graph.get(f).add(s);
+        }
+
+
+
+
     }
 }
