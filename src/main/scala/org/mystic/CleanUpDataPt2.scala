@@ -21,14 +21,14 @@ object CleanUpDataPt2 {
       var list: List[String] = Nil
       out.println(line)
       do {
-        line = br.nextLine
+        line = br.nextLine.trim
         val splitted = line split " "
-        out.println(splitted(0))
+        out.println(splitted(0).trim)
         list = splitted(splitted.size - 1) :: list
       } while (br.hasNext)
       list = list.reverse
       for (i <- 0 until list.size) {
-        out.println(list(i))
+        out.println(list(i).trim)
       }
       out.flush
       out.close
