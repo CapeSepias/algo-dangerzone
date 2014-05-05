@@ -1,14 +1,12 @@
 package org.mystic
 
+import java.io.{PrintWriter, FileInputStream, FilenameFilter, File}
 import java.util.Scanner
-import java.io._
-
 
 /**
- * @author kperikov
- *         Clean up data for previous version of Kagan test
+ * Created by mysterion on 05.05.14.
  */
-object CleanUpData {
+object CleanUpDataPt2 {
 
   def main(args: Array[String]) = {
     val dir = new File(".")
@@ -19,23 +17,21 @@ object CleanUpData {
       val br = new Scanner(new FileInputStream(new File(files(i).getAbsolutePath)), "utf8")
       val out = new PrintWriter("target/" + files(i), "utf8")
       var line = ""
+      line = br.nextLine
+      var list: List[String] = Nil
+      out.println(line)
       do {
         line = br.nextLine
-        if (line matches ".*\\d+.*") {
-          val splitted = line split " "
-          for (i <- 0 until splitted.length) {
-            if (splitted(i) matches ".*\\d+.*") {
-              out.print(splitted(i).replace(';', ' ') + " ")
-            }
-          }
-          out.println
-        } else {
-          out.println(line)
-        }
+        val splitted = line split " "
+        out.println(splitted(0))
+        list = splitted(splitted.size - 1) :: list
       } while (br.hasNext)
+      list = list.reverse
+      for (i <- 0 until list.size) {
+        out.println(list(i))
+      }
       out.flush
       out.close
     }
   }
-
 }

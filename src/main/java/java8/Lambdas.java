@@ -16,7 +16,7 @@ public class Lambdas {
         for (int i = 0; i < n; ++i) {
             strings[i] = sc.nextLine();
         }
-        Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
+//        Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
         for (int i = 0; i < n; ++i) {
             System.out.println(strings[i]);
         }
