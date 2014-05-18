@@ -1,5 +1,6 @@
-pollutantmean <- function(directory, pollutant, id = 1:332) {  
-  bigVector <- vector(mode="numeric", length=0)
+complete <- function(directory, id = 1:332) {  
+  nobs <- vector(mode="numeric", length=0)
+  id1 <- vector(mode="numeric", length=0)
   for (i in id) {
     if (i < 10) {      
       data <- read.csv(file=paste(directory, "/00", i, ".csv", sep=""), head=TRUE, sep=",")
@@ -8,16 +9,9 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     } else {
       data <- read.csv(file=paste(directory, "/", i, ".csv", sep=""), head=TRUE, sep=",")
     }    
-    
-    if (pollutant == "sulfate"){
-      bigVector <- c(bigVector, data$sulfate)
-    }
-    else if (pollutant == "nitrate"){
-      bigVector <- c(bigVector, data$nitrate)
-    } else {
-     ## error here!
-    }
+    z <- complete.cases(data$sulfate, data$nitrate)
+    id1 <- c(id1, i)
+    nobs <- c(nobs, length(z[z==TRUE]))
   }
-  res <- mean(bigVector, na.rm=TRUE)
-  res
+  data.frame(id=id1, nobs)
 }
