@@ -1,5 +1,8 @@
 *.class
 *.log
+# R specific
+.Rhistory
+
 
 # sbt specific
 dist/*
