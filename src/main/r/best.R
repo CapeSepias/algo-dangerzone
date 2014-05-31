@@ -24,7 +24,5 @@ best <- function(state, outcome) {
   }
   else {
     stop("invalid outcome")
-  }
-  ## Return hospital name in that state with lowest 30-day death rate
-  
+  }  
 }
