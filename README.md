@@ -13,6 +13,8 @@ List of solutions:
 7. [Discrete optimization course] [7]
 8. [Machine learning course] [8]
 9. Java 8 tryouts from [Java SE 8 for the Really Impatient] [9]
+10. Some R stuff from [Coursera] [10]
+11. Exercises from [`Real World Haskell` book] [11]
 
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/MinCut.scala       "Karger's algorithm"
@@ -24,3 +26,5 @@ List of solutions:
 [7]: https://class.coursera.org/optimization-002/ "Discrete optimization course"
 [8]: https://class.coursera.org/ml-005 "Machine learning course"
 [9]: http://www.amazon.com/Java-SE-8-Really-Impatient/dp/0321927761 "Java SE 8 for the Really Impatient"
+[10]: https://www.coursera.org/ "Coursera"
+[11]: http://book.realworldhaskell.org/ "`Real World Haskell` book"
