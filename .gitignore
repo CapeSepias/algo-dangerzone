@@ -3,6 +3,10 @@
 # R specific
 .Rhistory
 
+# haskell specific
+
+*.hi
+*.o
 
 # sbt specific
 dist/*
