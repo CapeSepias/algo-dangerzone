@@ -14,11 +14,11 @@ public class ShingleFilterTest {
 
     public static void main(String[] args) throws IOException {
 
-        String theSentence = "this is a dog";
+        String theSentence = "this is a big dog";
         StringReader reader = new StringReader(theSentence);
-        StandardTokenizer source = new StandardTokenizer(Version.LUCENE_47, reader);
-        TokenStream tokenStream = new StandardFilter(Version.LUCENE_47, source);
-        ShingleFilter sf = new ShingleFilter(tokenStream);
+        StandardTokenizer source = new StandardTokenizer(Version.LUCENE_4_9, reader);
+        TokenStream tokenStream = new StandardFilter(Version.LUCENE_4_9, source);
+        ShingleFilter sf = new ShingleFilter(tokenStream, 2, 100);
         sf.setOutputUnigrams(false);
 
         CharTermAttribute charTermAttribute = sf.addAttribute(CharTermAttribute.class);
