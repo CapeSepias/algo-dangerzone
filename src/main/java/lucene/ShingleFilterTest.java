@@ -1,6 +1,9 @@
 package lucene;
 
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.shingle.ShingleFilter;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
@@ -14,21 +17,23 @@ public class ShingleFilterTest {
 
     public static void main(String[] args) throws IOException {
 
-        String theSentence = "this is a big dog";
+        String theSentence = "THiS Is a bIg doG";
         StringReader reader = new StringReader(theSentence);
-        StandardTokenizer source = new StandardTokenizer(Version.LUCENE_4_9, reader);
-        TokenStream tokenStream = new StandardFilter(Version.LUCENE_4_9, source);
-        ShingleFilter sf = new ShingleFilter(tokenStream, 2, 100);
-        sf.setOutputUnigrams(false);
+        Tokenizer whitespaceTokenizer = new WhitespaceTokenizer(Version.LUCENE_4_9, reader);
+        Tokenizer standardTokenizer = new StandardTokenizer(Version.LUCENE_4_9, reader);
+        TokenStream tokenStream = new StandardFilter(Version.LUCENE_4_9, whitespaceTokenizer);
+        tokenStream = new ShingleFilter(tokenStream, 2, 100);
+        ((ShingleFilter) tokenStream).setOutputUnigrams(true);
+        tokenStream = new LowerCaseFilter(Version.LUCENE_4_9, tokenStream);
 
-        CharTermAttribute charTermAttribute = sf.addAttribute(CharTermAttribute.class);
-        sf.reset();
+        final CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        tokenStream.reset();
 
-        while (sf.incrementToken()) {
+        while (tokenStream.incrementToken()) {
             System.out.println(charTermAttribute.toString());
         }
 
-        sf.end();
-        sf.close();
+        tokenStream.end();
+        tokenStream.close();
     }
 }
