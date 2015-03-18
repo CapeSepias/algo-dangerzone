@@ -1,5 +1,8 @@
-import java.io.{InputStreamReader, BufferedReader}
+package algo1
+
+import java.io.{BufferedReader, InputStreamReader}
 import java.util.StringTokenizer
+
 import scala.math._
 
 object ShortestPaths {

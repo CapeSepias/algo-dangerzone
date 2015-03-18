@@ -1,7 +1,9 @@
-import scala.math._
+package algo1
 
-import java.io.{InputStreamReader, BufferedReader}
+import java.io.{BufferedReader, InputStreamReader}
 import java.util.{Random, StringTokenizer}
+
+import scala.math._
 
 /**
  * Solution for PA#3

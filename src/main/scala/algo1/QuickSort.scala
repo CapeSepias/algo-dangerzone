@@ -1,3 +1,5 @@
+package algo1
+
 /**
  * Solution for PA#2
  */
