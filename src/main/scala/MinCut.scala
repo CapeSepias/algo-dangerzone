@@ -5,7 +5,6 @@ import java.util.{Random, StringTokenizer}
 
 /**
  * Solution for PA#3
- * @author kperikov
  */
 object MinCut {
 
