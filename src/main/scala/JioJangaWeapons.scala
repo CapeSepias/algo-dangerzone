@@ -1,7 +1,6 @@
 
 /**
- * @author kperikov
- *         Which weapon to use in JioJanga game
+ * Which weapon to use in JioJanga game
  */
 object JioJangaWeapons {
 
