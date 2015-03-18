@@ -9,7 +9,7 @@ List of solutions:
 3. Shortest path's from one vertex to all other ([Floyd-Warshall algo] [3])
 4. Karatsuba fast multiplication (right now just skeleton in Haskell)
 5. [Percolation] [4] problem
-6. [Blocking] [7] and [NonBlocking] [8] queue (on hold)
+6. [Blocking] [5] and [NonBlocking] [6] queue (on hold)
 7. [Discrete optimization course] [7]
 8. [Machine learning course] [8]
 9. Java 8 tryouts from [Java SE 8 for the Really Impatient] [9]
