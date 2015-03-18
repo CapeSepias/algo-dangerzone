@@ -2,12 +2,7 @@ import java.io.{InputStreamReader, BufferedReader}
 import java.util.StringTokenizer
 import scala.math._
 
-/**
- * @author kperikov
- *
- *         Library of different Dijsktra implementation
- */
-object FloydWarshall {
+object ShortestPaths {
 
   var br: BufferedReader = null
   var st: StringTokenizer = null
