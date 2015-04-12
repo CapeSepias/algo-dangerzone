@@ -16,7 +16,7 @@ object PrimAlgo {
   var st: StringTokenizer = null
 
   def main(args: Array[String]): Unit = {
-    br = new BufferedReader(new FileReader("edges.txt"))
+    br = new BufferedReader(new FileReader("input.txt"))
     //    br = new BufferedReader(new InputStreamReader(System.in))
     out = new PrintWriter(new BufferedOutputStream(System.out))
     solve

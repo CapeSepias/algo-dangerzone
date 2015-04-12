@@ -5,18 +5,19 @@ import java.util
 import java.util.StringTokenizer
 
 import scala.collection._
+import scala.util.Random
 
 /**
  * Solution for PA#2
  */
-object KraskalAlgo {
+object ClusteringAlgo {
 
   var out: PrintWriter = null
   var br: BufferedReader = null
   var st: StringTokenizer = null
 
   def main(args: Array[String]): Unit = {
-    br = new BufferedReader(new FileReader("edges.txt"))
+    br = new BufferedReader(new FileReader("input.txt"))
     //    br = new BufferedReader(new InputStreamReader(System.in))
     out = new PrintWriter(new BufferedOutputStream(System.out))
     solve
@@ -92,65 +93,61 @@ object KraskalAlgo {
   }
 
   def solve: Int = {
-    val numberOfVertexes = nextInt
-    val numberOfEdges = nextInt
-    val graph = new Array[Array[Int]](numberOfVertexes)
-    for (i <- 0 until numberOfVertexes) {
-      graph(i) = new Array[Int](numberOfVertexes)
+    val numberOfNodes = nextInt
+    val graph = new Array[Array[Int]](numberOfNodes)
+    for (i <- 0 until numberOfNodes) {
+      graph(i) = new Array[Int](numberOfNodes)
     }
-    for (i <- 0 until numberOfVertexes) {
-      for (j <- 0 until numberOfVertexes) {
+    for (i <- 0 until graph.length) {
+      for (j <- 0 until graph.length) {
         graph(i)(j) = Int.MaxValue
       }
     }
+    val numberOfEdges = (numberOfNodes * (numberOfNodes - 1)) / 2
     val edges = new Array[Edge](numberOfEdges)
     for (i <- 0 until numberOfEdges) {
       val from = nextInt - 1
       val to = nextInt - 1
       val cost = nextInt
+      edges(i) = new Edge(from, to, cost)
       graph(from)(to) = cost
       graph(to)(from) = cost
     }
-    out.println(kraskalSlowAlgo(graph, edges))
+    out.println(clusterSlowAlgo(graph, edges, 4))
     return 0
   }
 
-  def kraskalSlowAlgo(graph: Array[Array[Int]], edges: Array[Edge]): Long = {
+  def clusterSlowAlgo(graph: Array[Array[Int]], edges: Array[Edge], desiredNumberOfClusters: Int): Long = {
     val sortedEdges = edges.sorted
-    for (i <- 0 until sortedEdges.length) {
-      val edge = sortedEdges(i)
-      val u = edge.from
-      val v = edge.to
-      // todo check edge(i)
-      // try to add it to MST
-      // check if there is no path in MST from u to v, then add it to MST
-      // we could do bfs or dfs here
+    var clusters = graph.length
+    var ind = 0
+    val uf: UnionFind = new ClassicalUnionFind(clusters)
+    while (clusters > desiredNumberOfClusters) {
+      val edge = sortedEdges(ind)
+      if (uf.find(edge.from) != uf.find(edge.to)) {
+        uf.union(edge.from, edge.to)
+        // merge cluster
+        clusters -= 1
+      }
+      ind += 1
     }
-    // O(m * n) time
-    return 0L
-  }
-
-
-  // union find structure
-  def kraskalFastAlgo(graph: Array[Array[Int]], edges: Array[Edge]): Long = {
-    val sortedEdges = edges.sorted
-    val unionFind: UnionFind = new ClassicalUnionFind
-    for (i <- 0 until sortedEdges.length) {
-      val edge = sortedEdges(i)
-      val u = edge.from
-      val v = edge.to
-      // todo check edge(i) with union find structure
-
+    while (clusters != desiredNumberOfClusters -1) {
+      val edge = sortedEdges(ind)
+      if (uf.find(edge.from) != uf.find(edge.to)) {
+        return edge.cost
+      }
+      ind += 1
     }
-    // O(m * log m) time
-    return 0L
+    return 0
   }
 
 
   // TODO scala style javadoc?
   trait UnionFind {
 
-    case class Node(name: Int)
+    case class Node(name: Int) {
+      var leader: Node = this
+    }
 
     /**
      * by name of object (int for simplicity) get a name(int for simplicity) of group it includes
@@ -164,12 +161,31 @@ object KraskalAlgo {
 
   }
 
-  case class Node
+  case class ClassicalUnionFind(init: Int) extends UnionFind {
+    var size = 0
+    private val groups = new Array[Node](init)
+    for (i <- 0 until init) {
+      groups(i) = new Node(i)
+    }
 
-  class ClassicalUnionFind extends UnionFind {
-    override def find(x: Int): Int = ???
+    override def find(x: Int): Int = {
+      val node = groups(x)
+      if (node.leader.name == x) {
+        return x
+      }
+      return find(node.leader.name)
+    }
 
-    override def union(g1: Int, g2: Int): Unit = ???
+    override def union(g1: Int, g2: Int): Unit = {
+      val g1Root = find(g1)
+      val g2Root = find(g2)
+      val rand = new Random
+      if (rand.nextBoolean()) {
+        groups(g1Root).leader = groups(g2Root)
+      } else {
+        groups(g2Root).leader = groups(g1Root)
+      }
+    }
   }
 
 }
