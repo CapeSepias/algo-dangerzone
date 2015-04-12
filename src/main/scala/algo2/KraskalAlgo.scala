@@ -7,9 +7,9 @@ import java.util.StringTokenizer
 import scala.collection._
 
 /**
- * Solution for PA#1
+ * Solution for PA#2
  */
-object PrimAlgo {
+object KraskalAlgo {
 
   var out: PrintWriter = null
   var br: BufferedReader = null
@@ -87,6 +87,10 @@ object PrimAlgo {
     }
   }
 
+  case class Edge(from: Int, to: Int, cost: Int) extends Comparable[Edge] {
+    override def compareTo(o: Edge): Int = Integer.compare(cost, o.cost)
+  }
+
   def solve: Int = {
     val numberOfVertexes = nextInt
     val numberOfEdges = nextInt
@@ -99,6 +103,7 @@ object PrimAlgo {
         graph(i)(j) = Int.MaxValue
       }
     }
+    val edges = new Array[Edge](numberOfEdges)
     for (i <- 0 until numberOfEdges) {
       val from = nextInt - 1
       val to = nextInt - 1
@@ -106,43 +111,65 @@ object PrimAlgo {
       graph(from)(to) = cost
       graph(to)(from) = cost
     }
-    out.println(slowPrimAlgo(graph))
+    out.println(kraskalSlowAlgo(graph, edges))
     return 0
   }
 
-  def slowPrimAlgo(graph: Array[Array[Int]]): Long = {
-    val v = new util.HashSet[Int]()
-    val x = new util.HashSet[Int]()
-    val numberOfVertexes = graph.length
-    for (i <- 0 until numberOfVertexes) {
-      v.add(i)
+  def kraskalSlowAlgo(graph: Array[Array[Int]], edges: Array[Edge]): Long = {
+    val sortedEdges = edges.sorted
+    for (i <- 0 until sortedEdges.length) {
+      val edge = sortedEdges(i)
+      val u = edge.from
+      val v = edge.to
+      // todo check edge(i)
+      // try to add it to MST
+      // check if there is no path in MST from u to v, then add it to MST
+      // we could do bfs or dfs here
     }
-    v.remove(0)
-    x.add(0)
-    var t = 0L
-    while (!v.isEmpty) {
-      val it = x.iterator()
-      var min = Int.MaxValue
-      var ind = -1
-      var vert = -1
-      while (it.hasNext) {
-        val vertex = it.next()
-        for (i <- 0 until numberOfVertexes) {
-          if (min > graph(vertex)(i) && v.contains(i)) {
-            min = graph(vertex)(i)
-            ind = i
-            vert = i
-          }
-        }
-      }
-      v.remove(vert)
-      x.add(vert)
-      t += min
-    }
-    return t
+    // O(m * n) time
+    return 0L
   }
 
-  // use heap to speed up Prim algo
-  def fastPrimAlgo() = ???
+
+  // union find structure
+  def kraskalFastAlgo(graph: Array[Array[Int]], edges: Array[Edge]): Long = {
+    val sortedEdges = edges.sorted
+    val unionFind: UnionFind = new ClassicalUnionFind
+    for (i <- 0 until sortedEdges.length) {
+      val edge = sortedEdges(i)
+      val u = edge.from
+      val v = edge.to
+      // todo check edge(i) with union find structure
+
+    }
+    // O(m * log m) time
+    return 0L
+  }
+
+
+  // TODO scala style javadoc?
+  trait UnionFind {
+
+    case class Node(name: Int)
+
+    /**
+     * by name of object (int for simplicity) get a name(int for simplicity) of group it includes
+     */
+    def find(x: Int): Int
+
+    /**
+    merge two group with name g1 and g2 (int for simplicity) in one group
+      */
+    def union(g1: Int, g2: Int)
+
+  }
+
+  case class Node
+
+  class ClassicalUnionFind extends UnionFind {
+    override def find(x: Int): Int = ???
+
+    override def union(g1: Int, g2: Int): Unit = ???
+  }
 
 }
