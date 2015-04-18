@@ -17,7 +17,7 @@ List of solutions:
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/scala/algo1/MinCut.scala       "Karger's algorithm"
 [2]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/java/StronglyConnectedComponents.java       "Strongly connected component problem"
-[3]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/scala/ShortestPaths.scala       "Floyd-Warshall algo"
+[3]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/scala/algo1/ShortestPaths.scala       "Floyd-Warshall algo"
 [4]: https://class.coursera.org/optimization-002/ "Discrete optimization course"
 [5]: http://book.realworldhaskell.org/ "`Real World Haskell` book"
 [6]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/scala/algo2/PrimAlgo.scala "Prim algorithm for finding MST in a graph"
