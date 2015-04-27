@@ -1,4 +1,4 @@
-package calculator
+package react.prog.calculator
 
 sealed abstract class Expr
 
@@ -25,7 +25,13 @@ object Calculator {
   def eval(expr: Expr, references: Map[String, Signal[Expr]]): Double = {
     expr match {
       case Literal(v) => v
-      case Ref(name) => eval(getReferenceExpr(name, references), references)
+      case Ref(name) =>
+        val e = getReferenceExpr(name, references)
+        e match {
+          case Ref(nm) => if (nm.equals(name)) Double.NaN else eval(e, references.filter(x => x.equals(name)))
+          case _ => eval(e, references)
+        }
+      //        val filtered = references.filter(x => x.equals(name))
       case Plus(a, b) => eval(a, references) + eval(b, references)
       case Minus(a, b) => eval(a, references) - eval(b, references)
       case Times(a, b) => eval(a, references) * eval(b, references)
@@ -38,10 +44,14 @@ object Calculator {
     */
   private def getReferenceExpr(name: String,
                                references: Map[String, Signal[Expr]]) = {
-    references.get(name).fold[Expr] {
-      Literal(Double.NaN)
-    } { exprSignal =>
-      exprSignal()
+    references.get(name) match {
+      case Some(x) => x()
+      case None => Literal(Double.NaN)
     }
+    //    references.get(name).fold[Expr] {
+    //      Literal(Double.NaN)
+    //    } { exprSignal =>
+    //      exprSignal()
+    //    }
   }
 }

@@ -7,7 +7,8 @@ import org.scalatest.junit.JUnitRunner
 
 import org.scalatest._
 
-import TweetLength.MaxTweetLength
+import react.prog.calculator._
+import react.prog.calculator.TweetLength._
 
 @RunWith(classOf[JUnitRunner])
 class CalculatorSuite extends FunSuite with ShouldMatchers {

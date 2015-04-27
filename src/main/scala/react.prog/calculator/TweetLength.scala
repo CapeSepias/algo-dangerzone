@@ -1,4 +1,4 @@
-package calculator
+package react.prog.calculator
 
 object TweetLength {
   final val MaxTweetLength = 140

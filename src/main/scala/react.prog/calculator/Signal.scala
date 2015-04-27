@@ -1,4 +1,4 @@
-package calculator
+package react.prog.calculator
 
 import scala.util.DynamicVariable
 

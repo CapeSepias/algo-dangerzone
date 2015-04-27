@@ -1,4 +1,4 @@
-package calculator
+package react.prog.calculator
 
 object Polynomial {
   def computeDelta(a: Signal[Double], b: Signal[Double],
