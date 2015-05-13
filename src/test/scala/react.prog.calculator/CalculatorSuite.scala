@@ -1,13 +1,8 @@
-package calculator
-
-import org.scalatest.FunSuite
+package react.prog.calculator
 
 import org.junit.runner.RunWith
+import org.scalatest.{FunSuite, _}
 import org.scalatest.junit.JUnitRunner
-
-import org.scalatest._
-
-import react.prog.calculator._
 import react.prog.calculator.TweetLength._
 
 @RunWith(classOf[JUnitRunner])
@@ -51,5 +46,10 @@ class CalculatorSuite extends FunSuite with ShouldMatchers {
     val resultRed2 = TweetLength.colorForRemainingCharsCount(Var(-5))
     assert(resultRed2() == "red")
   }
+
+  test("cyclic dependencies") {
+    Calculator.computeValues(Map())
+  }
+
 
 }
