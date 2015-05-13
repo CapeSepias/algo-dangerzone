@@ -10,9 +10,8 @@ object Week4 {
 
     val ticks = Observable.interval(1 second)
     val even = ticks.filter(_ % 2 == 1)
-    val buffered = ticks.buffer(1, 2)
 
-    val s = buffered.subscribe(println(_))
+    val s = even.subscribe(println(_))
 
     readLine()
 
