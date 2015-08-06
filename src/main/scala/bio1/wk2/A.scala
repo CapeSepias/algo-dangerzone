@@ -5,14 +5,16 @@ import scala.io.StdIn._
 object A {
 
   def main(args: Array[String]) = {
-    val text = readLine
-    val pattern = readLine
-    var ans = 0
-    (0 to text.length - pattern.length).foreach(i => {
-      if (text.substring(i, i + pattern.length).equalsIgnoreCase(pattern)) {
-        ans += 1
-      }
+    val genome = readLine
+    var countG = 0
+    var countC = 0
+    print("0 ")
+    genome.foreach(x => {
+      if (x == 'G')
+        countG += 1
+      else if (x == 'C')
+        countC += 1
+      print((countG - countC) + " ")
     })
-    println(ans)
   }
 }
