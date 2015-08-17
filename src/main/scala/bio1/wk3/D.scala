@@ -2,6 +2,7 @@ package bio1.wk3
 
 import java.util
 
+import scala.StringBuilder
 import scala.collection.mutable
 import scala.io.StdIn._
 
@@ -82,16 +83,16 @@ object D {
         val ch = s(i + j)
         ch match {
           case 'A' => {
-            pr *= prob(0)(j)
+            pr *= prob(j)(0)
           }
           case 'C' => {
-            pr *= prob(1)(j)
+            pr *= prob(j)(1)
           }
           case 'G' => {
-            pr *= prob(2)(j)
+            pr *= prob(j)(2)
           }
           case 'T' => {
-            pr *= prob(3)(j)
+            pr *= prob(j)(3)
           }
         }
       }
@@ -103,8 +104,71 @@ object D {
     bestKmer
   }
 
-  def score(strings: util.ArrayList[String]) = {
-    
+  def score(strings: util.ArrayList[String], k: Int) = {
+    val matrix = createMatrix(strings, k)
+    val sb = new StringBuilder
+    for (i <- 0 until matrix.length) {
+      var max = -1.0d
+      var ind = -1
+      for (j <- 0 until 4) {
+        if (max < matrix(i)(j)) {
+          max = matrix(i)(j)
+          ind = j
+        }
+      }
+      ind match {
+        case 0 => sb.append('A')
+        case 1 => sb.append('C')
+        case 2 => sb.append('G')
+        case 3 => sb.append('T')
+      }
+    }
+    val con = sb.toString
+    var res = 0
+    for (i <- 0 until strings.size) {
+      for (j <- 0 until strings.get(0).length) {
+        if (strings.get(i).charAt(j) != con(j)) {
+          res += 1
+        }
+      }
+    }
+    res
+  }
+
+  def createMatrix(motifs: util.ArrayList[String], k: Int) = {
+    val prob = new Array[Array[Double]](k)
+    for (i <- 0 until k) {
+      prob(i) = new Array[Double](4)
+    }
+    for (i <- 0 until motifs.size) {
+      for (j <- 0 until motifs.get(i).size) {
+        motifs.get(i).charAt(j) match {
+          case 'A' => {
+            prob(j)(0) += 1
+          }
+          case 'C' => {
+            prob(j)(1) += 1
+          }
+          case 'G' => {
+            prob(j)(2) += 1
+          }
+          case 'T' => {
+            prob(j)(3) += 1
+          }
+        }
+      }
+    }
+    for (i <- 0 until k) {
+      var sum = 0.0
+      for (j <- 0 until 4) {
+        sum += prob(i)(j)
+      }
+      for (j <- 0 until 4) {
+        if (sum != 0.0f)
+          prob(i)(j) /= (sum * 1.0f)
+      }
+    }
+    prob
   }
 
   def main(args: Array[String]) = {
@@ -118,15 +182,15 @@ object D {
     for (i <- 0 until t) {
       bestMotifs.add(dnas(i).substring(0, k))
     }
-    val motifs = new util.ArrayList[String]()
     for (i <- 0 to dnas(0).length - k) {
+      val motifs = new util.ArrayList[String]()
       val kmer = dnas(0).substring(i, i + k)
       motifs.add(kmer)
       for (j <- 1 until dnas.length) {
-        val matrix = createMatrix(motifs)
+        val matrix = createMatrix(motifs, k)
         motifs.add(findMostProbableKmer(dnas(j), k, matrix))
       }
-      if (score(motifs) > score(bestMotifs)) {
+      if (score(motifs, k) < score(bestMotifs, k)) {
         bestMotifs = motifs
       }
     }
