@@ -1,12 +1,10 @@
 package org.mystic
 
-import java.io.PrintWriter
-import java.util
-import java.util.Scanner
-import scala.collection.immutable.TreeMap
-import com.github.marklister.base64.Base64._
-import java.io._
+import java.io.{PrintWriter, _}
 import java.util.StringTokenizer
+
+import com.github.marklister.base64.Base64._
+
 import scala.collection.mutable
 
 object Base64ReportDecoder {
@@ -152,6 +150,8 @@ object Base64ReportDecoder {
               val correctAnswer = correctAnswers.get(round)
               if (ans == correctAnswer.get)
                 writer.println(s"2 ${time}")
+              else if (ans.equalsIgnoreCase("SKIP"))
+                writer.println(s"3 ${time}")
               else
                 writer.println(s"1 ${time}")
             }
@@ -166,9 +166,18 @@ object Base64ReportDecoder {
           try {
             val writer = new PrintWriter(s"Stroop-$name-$email-$age-$lang-$gender.csv")
             val splitted = report.split("\\|")
+            val reports = new Array[String](50)
+            for (i <- 0 until reports.length)
+              reports(i) = ""
+            var ind = 0
             for (i <- 0 until splitted.length by 2) {
-              writer.println(s"${splitted(i)} ${splitted(i + 1)}")
+              if (ind == 50) {
+                ind = 0
+              }
+              reports(ind) += s"${splitted(i)} ${splitted(i + 1)} "
+              ind += 1
             }
+            reports.foreach(writer.println)
             writer.flush
             writer.close
           } catch {
