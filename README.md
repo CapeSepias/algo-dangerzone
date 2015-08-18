@@ -13,6 +13,7 @@ List of solutions:
 7. [Prim algorithm for finding MST in a graph] [6]
 8. [Clustering] [7] of graph based on the distance between nodes 
 9. [Scheduling] [8] application based on greedy algorithm 
+10. ???
 
 
 [1]: https://github.com/MysterionRise/algo-dangerzone/blob/master/src/main/scala/algo1/MinCut.scala       "Karger's algorithm"
