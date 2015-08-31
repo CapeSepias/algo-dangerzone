@@ -1,11 +1,26 @@
 package org.mystic
 
-import java.io.{PrintWriter, File}
-import java.util.Scanner
+import java.io._
+import java.util.{StringTokenizer}
 
 import scala.collection.mutable
 
 object FileMerger {
+
+  var out: PrintWriter = null
+  var br: BufferedReader = null
+  var st: StringTokenizer = null
+
+  def next: String = {
+    while (st == null || !st.hasMoreTokens) {
+      val line: String = br.readLine
+      if (line == null) {
+        return null
+      }
+      st = new StringTokenizer(line)
+    }
+    st.nextToken
+  }
 
   class MultiHashSet[T <% Comparable[T]] {
     val map = new mutable.HashMap[T, Int]()
@@ -31,27 +46,43 @@ object FileMerger {
     }
   }
 
+  def notNumber(s: String): Boolean = {
+    try {
+      java.lang.Double.parseDouble(s)
+      return false
+    } catch {
+      case e: Exception =>
+    }
+    true
+  }
+
   def readFile(s: String) = {
     val map = new MultiHashSet[String]
-    val in = new Scanner(new File(s))
-    while (in.hasNextLine()) {
-      val line = in.nextLine().split("\\=")
-      if (line.size == 2) {
-        map.add(line(0), line(1).toInt)
+    br = new BufferedReader(new InputStreamReader(new FileInputStream(s), "UTF8"));
+    var cnt = 0L
+    var line = next
+    while (line != null) {
+      cnt += 1
+      val lines = line.split("\\=")
+      if (lines.size == 2) {
+        if (!lines(0).contains("_") && notNumber(lines(0))) {
+          map.add(lines(0).toLowerCase, lines(1).toInt)
+        }
       }
+      line = next
     }
+    println(cnt)
     map
   }
 
-  def mergeFiles(a: MultiHashSet[String], b: MultiHashSet[String]): Map[String, Int] = {
-    val map1 = a.map
-    val map2 = b.map
-    val res = (map1.keySet ++ map2.keySet).map(i => (i, map1.getOrElse(i, 0) + map2.getOrElse(i, 0))).toMap
-    res
+  def mergeFiles(a: Map[String, Int], b: Map[String, Int]): Map[String, Int] = {
+    val res = new mutable.HashMap[String, Int]()
+    (a.keySet ++ b.keySet).foreach(key => res.put(key, a.getOrElse(key, 0) + b.getOrElse(key, 0)))
+    res.toMap
   }
 
-  def writeToFile(map: Map[String, Int]): Unit = {
-    val out = new PrintWriter(new File("result.txt"))
+  def writeToFile(map: Map[String, Int], name: String): Unit = {
+    val out = new PrintWriter(new File(name))
     map.foreach(x => {
       out.println(s"${x._1}=${x._2}")
     })
@@ -59,11 +90,30 @@ object FileMerger {
     out.close
   }
 
+  def mergeOnTheFly(base: MultiHashSet[String], s: String): MultiHashSet[String] = {
+    br = new BufferedReader(new InputStreamReader(new FileInputStream(s), "UTF8"));
+    var cnt = 0L
+    var line = next
+    while (line != null) {
+      cnt += 1
+      val lines = line.split("\\=")
+      if (lines.size == 2) {
+        if (!lines(0).contains("_") && notNumber(lines(0))) {
+          base.add(lines(0).toLowerCase, lines(1).toInt)
+        }
+      }
+      line = next
+    }
+    println(cnt)
+    base
+  }
+
   def main(args: Array[String]) {
-    val a = readFile(args(0))
-    val b = readFile(args(1))
-    val c = mergeFiles(a, b)
-    writeToFile(c)
+    var base = readFile("cleaned-836.txt")
+    for (i <- 837 to 859) {
+      base = mergeOnTheFly(base, s"cleaned-$i.txt")
+    }
+    writeToFile(base.map.toMap, "terms.txt")
   }
 
 }
