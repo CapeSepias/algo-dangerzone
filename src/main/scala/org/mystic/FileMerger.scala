@@ -3,6 +3,8 @@ package org.mystic
 import java.io._
 import java.util.{StringTokenizer}
 
+import org.mapdb.{HTreeMap, Serializer, DBMaker}
+
 import scala.collection.mutable
 
 object FileMerger {
@@ -10,6 +12,7 @@ object FileMerger {
   var out: PrintWriter = null
   var br: BufferedReader = null
   var st: StringTokenizer = null
+  var map: HTreeMap[String, Int] = null
 
   def next: String = {
     while (st == null || !st.hasMoreTokens) {
@@ -22,18 +25,17 @@ object FileMerger {
     st.nextToken
   }
 
-  class MultiHashSet[T <% Comparable[T]] {
-    val map = new mutable.HashMap[T, Int]()
+  class MultiHashSet {
 
-    def count(x: T): Int = {
-      return map.getOrElse(x, 0)
+    def count(x: String): Int = {
+      if (!map.containsKey(x)) 0 else map.get(x)
     }
 
-    def add(x: T): Unit = add(x, 1)
+    def add(x: String): Unit = add(x, 1)
 
-    def add(x: T, cnt: Int): Unit = map.put(x, count(x) + cnt)
+    def add(x: String, cnt: Int): Unit = map.put(x, count(x) + cnt)
 
-    def remove(x: T): Boolean = {
+    def remove(x: String): Boolean = {
       val prev = count(x)
       if (prev == 0)
         return false
@@ -57,7 +59,7 @@ object FileMerger {
   }
 
   def readFile(s: String) = {
-    val map = new MultiHashSet[String]
+    val map = new MultiHashSet
     br = new BufferedReader(new InputStreamReader(new FileInputStream(s), "UTF8"));
     var cnt = 0L
     var line = next
@@ -81,16 +83,18 @@ object FileMerger {
     res.toMap
   }
 
-  def writeToFile(map: Map[String, Int], name: String): Unit = {
+  def writeToFile(map: HTreeMap[String, Int], name: String): Unit = {
     val out = new PrintWriter(new File(name))
-    map.foreach(x => {
-      out.println(s"${x._1}=${x._2}")
-    })
+    val it = map.entrySet().iterator()
+    while (it.hasNext) {
+      val next = it.next()
+      out.println(s"${next.getKey}=${next.getValue}")
+    }
     out.flush
     out.close
   }
 
-  def mergeOnTheFly(base: MultiHashSet[String], s: String): MultiHashSet[String] = {
+  def mergeOnTheFly(base: MultiHashSet, s: String): MultiHashSet = {
     br = new BufferedReader(new InputStreamReader(new FileInputStream(s), "UTF8"));
     var cnt = 0L
     var line = next
@@ -109,11 +113,27 @@ object FileMerger {
   }
 
   def main(args: Array[String]) {
+    val db = DBMaker
+      .fileDB(new File("D:\\\\mapdb"))
+      .fileLockDisable
+      .asyncWriteEnable
+      .allocateStartSize(20 * 1024 * 1024 * 1024)
+      .allocateIncrement(1024 * 1024 * 512)
+      .cacheHashTableEnable()
+      .cacheSize(1000000)
+      .make()
+    map = db.hashMapCreate("terms")
+      .keySerializer(Serializer.STRING)
+      .valueSerializer(Serializer.INTEGER)
+      .makeOrGet()
     var base = readFile("cleaned-836.txt")
     for (i <- 837 to 859) {
       base = mergeOnTheFly(base, s"cleaned-$i.txt")
+      db.commit()
+      db.compact()
     }
-    writeToFile(base.map.toMap, "terms.txt")
+    writeToFile(map, "terms.txt")
+    db.close()
   }
 
 }
