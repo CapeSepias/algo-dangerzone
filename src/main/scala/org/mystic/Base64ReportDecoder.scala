@@ -184,9 +184,9 @@ object Base64ReportDecoder {
             case io: IOException => println(s"Error with processing report with userId = ${userId}")
           }
         }
-      }
-      if (testId.equalsIgnoreCase("1") && !report.isEmpty) {
-
+        case _ => {
+          println("Not supported yet")
+        }
       }
     }
     return 0
